@@ -52,11 +52,13 @@
     <!-- Step03 Adding Desktopu Shortcut ================================== -->   
 	</Fragment>
 
+  
 	<Fragment>
 		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
       <!-- leave this empty --> 
 		</ComponentGroup>
 	</Fragment>
+  
   
 	<Fragment>
 	  <ComponentGroup Id="ProgramFilesFolder_files" Directory="ProgramFilesFolder">
