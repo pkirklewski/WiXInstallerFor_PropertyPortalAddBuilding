@@ -1,0 +1,3 @@
+C:\Users\LT5244\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\AddBuildingsToPL\bin\Debug\cab1.cab
+C:\Users\LT5244\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\AddBuildingsToPL\bin\Debug\AddBuildingsToPL.msi
+C:\Users\LT5244\Documents\Visual Studio 2017\Projects\WindowsFormsApp1\AddBuildingsToPL\bin\Debug\AddBuildingsToPL.wixpdb

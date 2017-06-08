@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"><?define Buildings_TargetDir=$(var.Buildings.TargetDir)?>
+	<Product Id="*" Name="AddBuildingsToPL" Language="1033" Version="1.0.0.0" Manufacturer="Engie.com" UpgradeCode="49f3dc53-c49d-4d58-9bb4-e347d928e7b6">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate />
+
+		<Feature Id="ProductFeature" Title="AddBuildingsToPL" Level="1">
+			<ComponentGroupRef Id="ProductComponents" />
+			<ComponentGroupRef Id="ProgramFilesFolder_files" />
+      <ComponentRef Id="ApplicationShortcut" />               <!-- Step01 Add Application Shortcut Component Reference (START MENU)-->
+      <ComponentRef Id="ApplicationShortcutDesktop" />        <!-- Step01 Add Application Shortcut Component Reference (DESKTOP SHORTCUT) -->
+		</Feature>
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="INSTALLFOLDER" Name="AddBuildingsToPL" />
+        </Directory>
+        <Directory Id="ProgramMenuFolder">                                      <!-- Step02 Directory Id="ProgramMenuFolder" -->
+        <Directory Id="ApplicationProgramsFolder" Name="AddBuildingsToPL"/>     <!-- Step02 Directory Id="ApplicationProgramsFolder" Name="AddBuildingsToPL"-->                       
+      </Directory>
+      <Directory Id="DesktopFolder" Name="Desktop"/>                            <!-- Step02 Directory Id="DesktopFolder" Name="Desktop"-->
+    </Directory>
+
+    <!-- Step03  Adding Start Menu Shortcut ================================== -->
+    <DirectoryRef Id="ApplicationProgramsFolder">
+      <Component Id="ApplicationShortcut" Guid="FECD2568-5B65-450E-8140-0FE4C65B0B69">  <!-- Generate a new GUID in VS Tools > Create GUID -->
+       
+        <Shortcut Id="ApplicationStartMenuShortcut"
+                  Name="AddBuildingsToPL"
+                  Description="Add Buildings to Process Library"
+                  Target="[#WindowsFormsApp1.exe]" WorkingDirectory="APPLICATIONROOTDIRECTORY"/> <!-- Value from your project dir .\bin\Debug just check what is the name of the .exe file -->
+        <RemoveFolder Id="CleanUpShortCut" Directory="ApplicationProgramsFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\AddBuildingsToPL" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+
+    <DirectoryRef Id="DesktopFolder">
+      <Component Id="ApplicationShortcutDesktop" Guid="BD85552C-6E2E-472A-BC62-934EEA10A8B0">        <!-- Generate a new GUID with VS Tools > Create GUID -->
+        <Shortcut Id="ApplicationDesktopShortcut"
+                  Name="AddBuildingsToPL"
+                  Description="Add Buildings to Process Library"
+                  Target="[#WindowsFormsApp1.exe]"
+                  WorkingDirectory="APPLICATIONROOTDIRECTORY"/>
+        <RemoveFolder Id="CleanUpDesktopShortCut" Directory="DesktopFolder" On="uninstall"/>
+        <RegistryValue Root="HKCU" Key="Software\Microsoft\AddBuildings" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+      </Component>
+    </DirectoryRef>
+    <!-- Step03 Adding Desktopu Shortcut ================================== -->   
+	</Fragment>
+
+	<Fragment>
+		<ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <!-- leave this empty --> 
+		</ComponentGroup>
+	</Fragment>
+  
+	<Fragment>
+	  <ComponentGroup Id="ProgramFilesFolder_files" Directory="ProgramFilesFolder">
+	    <Component Id="EntityFramework.SqlServer.dll" Guid="a66b3624-2d00-4c0c-8290-6594f3c3c449">
+	      <File Id="EntityFramework.SqlServer.dll" Name="EntityFramework.SqlServer.dll" Source="$(var.Buildings_TargetDir)EntityFramework.SqlServer.dll" />
+	    </Component>
+	    <Component Id="EntityFramework.dll" Guid="6da97b44-88be-4e9e-a76b-f2a4cb43860d">
+	      <File Id="EntityFramework.dll" Name="EntityFramework.dll" Source="$(var.Buildings_TargetDir)EntityFramework.dll" />
+	    </Component>
+	    <Component Id="WindowsFormsApp1.exe.config" Guid="ddac5a28-4339-42f9-8898-d3ce74b0fab8">
+	      <File Id="WindowsFormsApp1.exe.config" Name="WindowsFormsApp1.exe.config" Source="$(var.Buildings_TargetDir)WindowsFormsApp1.exe.config" />
+	    </Component>
+	    <Component Id="WindowsFormsApp1.exe" Guid="073a1ab7-626a-4b3c-a230-a7de7945495a">
+	      <File Id="WindowsFormsApp1.exe" Name="WindowsFormsApp1.exe" Source="$(var.Buildings_TargetDir)WindowsFormsApp1.exe" />
+	    </Component>
+	  </ComponentGroup>
+	</Fragment>
+</Wix>
